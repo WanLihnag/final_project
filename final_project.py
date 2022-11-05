@@ -7,20 +7,21 @@ plt.style.use('seaborn')
 st.title('Final project by group 54')
 
 df = pd.read_csv('online_fraud.csv')
-# df = df.sample(6666) 
+# df = df.sample(6666)
 df['isFraud'][df['isFraud'] == 1] = 'Fraud'
 df['isFraud'][df['isFraud'] == 0] = 'Not Fraud'
 # df = df.sort_values(by = 'amount', ignore_index= 'True',ascending= False)
 
 
-amount_filter = st.sidebar.slider('Minimal Amount of transaction:', 0, 5000000, 50000)
+amount_filter = st.sidebar.slider(
+    'Minimal Amount of transaction:', 0, 5000000, 50000)
 
 step_filter = st.sidebar.multiselect(
-     'Step Selector',
-     df.step.unique(),  # options
-     df.step.unique())  # defaults
+    'Step Selector',
+    df.step.unique(),  # options
+    df.step.unique())  # defaults
 
-form = st.sidebar.radio("Fraud Selector",('ALL', 'Fraud', 'Not Fraud'))
+form = st.sidebar.radio("Fraud Selector", ('ALL', 'Fraud', 'Not Fraud'))
 
 df = df[df.amount >= amount_filter]
 df = df[df.step.isin(step_filter)]
@@ -29,7 +30,7 @@ if form == 'Fraud':
     df = df[df.isFraud == 'Fraud']
 elif form == 'ALL':
     df = df[(df.isFraud == 'Fraud') | (df.isFraud == 'Not Fraud')]
-else :
+else:
     df = df[df.isFraud == 'Not Fraud']
 
 st.subheader('The filtered table:')
@@ -40,9 +41,6 @@ c = df.groupby('isFraud').sum()
 c['number'] = df.isFraud.value_counts()
 c['percentage'] = (c.number / df.shape[0]).apply(lambda x: format(x, '.2%'))
 c[['number', 'percentage']]
-
-
-
 
 
 st.subheader('Payment type and quantities:')
@@ -57,7 +55,7 @@ st.pyplot(fig)
 
 st.subheader('A Line Chart Of The Ticket Price')
 fig, ax0 = plt.subplots()
-_step = df.sort_values(by = 'step', ignore_index= 'True', ascending= True)
+_step = df.sort_values(by='step', ignore_index='True', ascending=True)
 _step.step.plot().set_ylabel('step')
 st.pyplot(fig)
 
@@ -73,8 +71,8 @@ data = df[df.isFraud == 'Fraud']
 # figure.show()
 
 # d = pd.Series(df.amount,df.oldbalanceOrg)
-fig , ax1 = plt.subplots()
-df.plot.scatter(x= 'oldbalanceOrg',y= 'amount',ax=ax1)
+fig, ax1 = plt.subplots()
+df.plot.scatter(x='oldbalanceOrg', y='amount', ax=ax1)
 ax1.set_xlabel('balance')
 ax1.set_ylabel('amount')
 # plt.ylim(0,2000000)
