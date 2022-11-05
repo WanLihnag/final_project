@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import plotly.express as px
+
 plt.style.use('seaborn')
 
 st.title('Final project by group 54')
@@ -48,11 +48,6 @@ fig, ax = plt.subplots()
 val = df.type.hist(bins=9)
 st.pyplot(fig)
 
-# st.subheader('Payment type and quantities:')
-# fig, ax0 = plt.subplots()
-# val = df.plot(ax= ax0)#.set_xticks(df.index, df.step, rotation=60)
-# st.pyplot(fig)
-
 st.subheader('A Line Chart Of The Ticket Price')
 fig, ax0 = plt.subplots()
 _step = df.sort_values(by='step', ignore_index='True', ascending=True)
@@ -70,7 +65,7 @@ data = df[df.isFraud == 'Fraud']
 # figure = px.pie(data, values=quantity, names=transactions, hole = 0.5, title= "Distribution of Transaction Type")
 # figure.show()
 
-# d = pd.Series(df.amount,df.oldbalanceOrg)
+st.subheader('Scatter plot of amount and balance')
 fig, ax1 = plt.subplots()
 df.plot.scatter(x='oldbalanceOrg', y='amount', ax=ax1)
 ax1.set_xlabel('balance')
@@ -78,6 +73,3 @@ ax1.set_ylabel('amount')
 # plt.ylim(0,2000000)
 plt.xticks(rotation=0)
 st.pyplot(fig)
-
-# ticket_price = df.sort_values(by = 'amount', ignore_index= 'True',ascending= False)#ignore_index
-# ticket_price.amount.plot().set_ylabel('amount')
